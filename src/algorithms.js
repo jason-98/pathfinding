@@ -4,10 +4,17 @@ class Vertex{
     this.id = id;
     this.dist = null;
     this.prev = null;
-    this.neighbours = [];
+    this.edges = []; // stores array of edges to neighbouring vertices
     this.isVisitable = isVisitable
   }
 
+}
+
+class Edge{
+    constructor(neighbourVertex,cost){
+      this.neighbourVertex = neighbourVertex;
+      this.cost = cost;
+    }
 }
 
 function dijkstra(graph, sourceIndex, targetIndex){
@@ -38,11 +45,14 @@ function dijkstra(graph, sourceIndex, targetIndex){
         if(n===rowIndex && p===colIndex){
           continue; //dont want to add currentVertex as a neighbour to itself
         }
+
+        //determine if current neighbour is connected to current Vertex by diagonal
+        const isDiagonal = n!==rowIndex && p!==colIndex
         const neighbour = vertexSet[n*rowLength+p]
 
         //only add to list of neighbours if able to visit
         if(neighbour.isVisitable){
-            vertexSet[m].neighbours.push(neighbour)
+            vertexSet[m].edges.push(new Edge(neighbour, isDiagonal ? 1.414 : 1)) //diagonal has cost of sqrt(2) = 1.14
         }
 
       }
@@ -73,13 +83,13 @@ function dijkstra(graph, sourceIndex, targetIndex){
     }
 
 
-    for(var j = 0; j < u.neighbours.length; j++){
-        const v = u.neighbours[j] //use variable 'v' for current neighbour
+    for(var j = 0; j < u.edges.length; j++){
+        const v = u.edges[j] //use variable 'v' for current edge
 
-        const alt = u.dist +1 // assume all link costs are 1
-        if(v.dist==null || alt < v.dist){
-          v.dist = alt
-          v.prev = u
+        const alt = u.dist + v.cost
+        if(v.neighbourVertex.dist==null || alt < v.neighbourVertex.dist){
+          v.neighbourVertex.dist = alt
+          v.neighbourVertex.prev = u
         }
     }
 
@@ -102,7 +112,7 @@ function dijkstra(graph, sourceIndex, targetIndex){
     t = t.prev
   }
 
-  console.log("Path to target:", pathToTarget)
+  //console.log("Path to target:", pathToTarget)
   return pathToTarget
 }
 
