@@ -10,16 +10,24 @@ class App extends React.Component {
   constructor(props){
     super(props)
 
-    const squares = Array(400).fill(0)
-    squares[11] = 1  //start
-    squares[88] = 2  //end
+    const sourceIndex = 31
+    const targetIndex = 868
+
+    const squares = Array(900).fill(0)
+    squares[sourceIndex] = 1  //start
+    squares[targetIndex] = 2  //end
+
+    //show initial path
+    const squares_copy = this.updatePath(squares,sourceIndex,targetIndex)
 
     this.state = {
-          squares: squares,
+          squares: squares_copy,
+          sourceIndex: sourceIndex,
+          targetIndex: targetIndex,
     };
   }
 
-  updatePath(squares){
+  updatePath(squares, sourceIndex, targetIndex){
     //clear any previous paths
     for(var j = 0; j<squares.length; j++){
       if(squares[j]===4){
@@ -27,7 +35,7 @@ class App extends React.Component {
       }
     }
 
-    const path = dijkstra(squares, 11, 88)
+    const path = dijkstra(squares, sourceIndex, targetIndex)
 
     //only update squares if a valid path was found
     if(path.length!==0){
@@ -40,14 +48,14 @@ class App extends React.Component {
     return squares
   }
 
-
+  
 
   handleClick(i) {
 
     const squares_copy = this.state.squares.slice()
     squares_copy[i] = 3
 
-    const squares = this.updatePath(squares_copy)
+    const squares = this.updatePath(squares_copy,this.state.sourceIndex, this.state.targetIndex)
 
     this.setState({
       squares: squares
