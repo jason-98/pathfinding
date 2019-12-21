@@ -48,7 +48,13 @@ class App extends React.Component {
     return squares
   }
 
-  
+  handleMouseEnter(i, isMousePressed){
+    //if mouse is pressed when cursor moved into a square -> treat as mouse click
+    if(isMousePressed){
+      this.handleClick(i)
+    }
+
+  }
 
   handleClick(i) {
 
@@ -72,6 +78,7 @@ class App extends React.Component {
           <Board
             squares={this.state.squares}
             onClick={(i) => this.handleClick(i)}
+            onMouseEnter={(i, isMousePressed) => this.handleMouseEnter(i,isMousePressed)}
             />
         </div>
       </div>

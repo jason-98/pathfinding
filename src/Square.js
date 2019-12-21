@@ -16,7 +16,7 @@ function Square(props) {
   }
 
   return (
-    <button className={buttonClass} onClick={props.onClick}>
+    <button className={buttonClass} onMouseDown={props.onClick} onMouseEnter={props.onMouseEnter}>
       {props.index}
     </button>
   );

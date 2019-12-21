@@ -3,12 +3,21 @@ import Square from './Square';
 import './Board.css';
 
 class Board extends React.Component {
+
+  constructor(props){
+    super(props)
+    this.state = {
+          mouseDown: false,
+    };
+  }
+
   renderSquare(i) {
     return (
       <Square
         index={i}
         value={this.props.squares[i]}
         onClick={() => this.props.onClick(i)}
+        onMouseEnter={() => this.props.onMouseEnter(i,this.state.mouseDown)}
       />
     );
   }
@@ -36,7 +45,10 @@ class Board extends React.Component {
     }
 
     return (
-      <div>
+      <div
+          onMouseDown={()=> this.setState({ mouseDown: true })}
+          onMouseUp={()=> this.setState({ mouseDown: false })}
+      >
         {rows}
       </div>
     );
