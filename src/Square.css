@@ -1,0 +1,37 @@
+button{
+  border: 1px solid #999;
+  float: left;
+  font-size: 8px;
+  font-weight: bold;
+  line-height: 34px;
+  height: 24px;
+  margin-right: -1px;
+  margin-top: -1px;
+  padding: 0;
+  text-align: center;
+  width: 24px;
+}
+
+button:focus {
+  outline:0;
+}
+
+.square-default {
+  background: #ffffff;
+}
+
+.square-start {
+  background: #2ed336;
+}
+
+.square-end {
+  background: #f24646;
+}
+
+.square-wall {
+  background: #cecece;
+}
+
+.square-path {
+  background: #707bf4;
+}
