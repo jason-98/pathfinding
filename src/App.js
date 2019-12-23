@@ -48,26 +48,24 @@ class App extends React.Component {
     return squares
   }
 
-  handleMouseEnter(i, isMousePressed){
-    //if mouse is pressed when cursor moved into a square -> treat as mouse click
-    if(isMousePressed){
-      this.handleClick(i)
-    }
+  handlePlaceWall(i){
+    const squares = this.state.squares.slice()
+    squares[i] = 3
+    this.setState({
+      squares: squares
+    });
 
   }
 
-  handleClick(i) {
+
+  handleUpdatePath() {
 
     const squares_copy = this.state.squares.slice()
-    squares_copy[i] = 3
-
     const squares = this.updatePath(squares_copy,this.state.sourceIndex, this.state.targetIndex)
 
     this.setState({
       squares: squares
     });
-
-
 
   }
 
@@ -77,8 +75,8 @@ class App extends React.Component {
         <div>
           <Board
             squares={this.state.squares}
-            onClick={(i) => this.handleClick(i)}
-            onMouseEnter={(i, isMousePressed) => this.handleMouseEnter(i,isMousePressed)}
+            onUpdatePath={(i) => this.handleUpdatePath()}
+            onPlaceWall={(i) => this.handlePlaceWall(i)}
             />
         </div>
       </div>

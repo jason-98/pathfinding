@@ -7,7 +7,7 @@ class Board extends React.Component {
   constructor(props){
     super(props)
     this.state = {
-          mouseDown: false,
+          isMouseDown: false,
     };
   }
 
@@ -16,8 +16,9 @@ class Board extends React.Component {
       <Square
         index={i}
         value={this.props.squares[i]}
-        onClick={() => this.props.onClick(i)}
-        onMouseEnter={() => this.props.onMouseEnter(i,this.state.mouseDown)}
+        onMouseDown={() => this.handleMouseDown(i)}
+        onMouseEnter={() => this.handleMouseEnter(i)}
+        onMouseUp={() => this.handleMouseUp()}
       />
     );
   }
@@ -35,6 +36,23 @@ class Board extends React.Component {
     );
   }
 
+
+  handleMouseDown(i){
+      this.props.onPlaceWall(i)
+  }
+
+  handleMouseEnter(i){
+    if(this.state.isMouseDown){
+        this.props.onPlaceWall(i)
+    }
+  }
+
+  handleMouseUp(){
+      this.props.onUpdatePath()
+  }
+
+
+
   render() {
 
     const rows = []
@@ -46,8 +64,8 @@ class Board extends React.Component {
 
     return (
       <div
-          onMouseDown={()=> this.setState({ mouseDown: true })}
-          onMouseUp={()=> this.setState({ mouseDown: false })}
+          onMouseDown={()=> this.setState({ isMouseDown: true })}
+          onMouseUp={()=> this.setState({ isMouseDown: false })}
       >
         {rows}
       </div>
