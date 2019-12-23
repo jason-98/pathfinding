@@ -24,6 +24,8 @@ class App extends React.Component {
           squares: squares_copy,
           sourceIndex: sourceIndex,
           targetIndex: targetIndex,
+          isSourceMoving: false,
+          isTargetMoving: false,
     };
   }
 
@@ -48,7 +50,7 @@ class App extends React.Component {
     return squares
   }
 
-  handlePlaceWall(i){
+  placeWall(i){
     const squares = this.state.squares.slice()
     squares[i] = 3
     this.setState({
@@ -58,7 +60,64 @@ class App extends React.Component {
   }
 
 
-  handleUpdatePath() {
+  handleMouseDown(i){
+    const squares = this.state.squares.slice()
+    if(squares[i]===1){
+      this.setState({
+        isSourceMoving: true
+      });
+    } else if(squares[i]===2){
+      this.setState({
+        isTargetMoving: true
+      });
+    }else{
+      this.placeWall(i)
+    }
+  }
+
+
+  handleMouseEnter(i){
+
+    if(this.state.isSourceMoving){
+        const squares = this.state.squares.slice()
+        const oldSourceIndex = this.state.sourceIndex
+
+        squares[i]=1
+        squares[oldSourceIndex]=0
+
+        this.setState({
+          squares: squares,
+          sourceIndex: i
+        });
+
+    } else if(this.state.isTargetMoving){
+        const squares = this.state.squares.slice()
+        const oldTargetIndex = this.state.targetIndex
+
+        squares[i]=2
+        squares[oldTargetIndex]=0
+
+        this.setState({
+          squares: squares,
+          targetIndex: i
+      });
+    } else {
+        this.placeWall(i)
+    }
+
+
+  }
+
+  handleMouseUp(i){
+    if(this.state.isSourceMoving){
+        this.setState({
+          isSourceMoving: false
+        });
+    } else if(this.state.isTargetMoving){
+        this.setState({
+          isTargetMoving: false
+        });
+    }
 
     const squares_copy = this.state.squares.slice()
     const squares = this.updatePath(squares_copy,this.state.sourceIndex, this.state.targetIndex)
@@ -66,6 +125,8 @@ class App extends React.Component {
     this.setState({
       squares: squares
     });
+
+
 
   }
 
@@ -75,8 +136,9 @@ class App extends React.Component {
         <div>
           <Board
             squares={this.state.squares}
-            onUpdatePath={(i) => this.handleUpdatePath()}
-            onPlaceWall={(i) => this.handlePlaceWall(i)}
+            onMouseDown={(i) => this.handleMouseDown(i)}
+            onMouseEnter={(i) => this.handleMouseEnter(i)}
+            onMouseUp={(i) => this.handleMouseUp(i)}
             />
         </div>
       </div>

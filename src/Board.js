@@ -16,9 +16,9 @@ class Board extends React.Component {
       <Square
         index={i}
         value={this.props.squares[i]}
-        onMouseDown={() => this.handleMouseDown(i)}
         onMouseEnter={() => this.handleMouseEnter(i)}
-        onMouseUp={() => this.handleMouseUp()}
+        onMouseDown={() => this.props.onMouseDown(i)}
+        onMouseUp={() => this.props.onMouseUp(i)}
       />
     );
   }
@@ -37,18 +37,11 @@ class Board extends React.Component {
   }
 
 
-  handleMouseDown(i){
-      this.props.onPlaceWall(i)
-  }
-
+  //check if mouse is currently being pressed down before bubbling up
   handleMouseEnter(i){
     if(this.state.isMouseDown){
-        this.props.onPlaceWall(i)
+        this.props.onMouseEnter(i)
     }
-  }
-
-  handleMouseUp(){
-      this.props.onUpdatePath()
   }
 
 
