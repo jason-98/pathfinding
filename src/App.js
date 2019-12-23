@@ -24,8 +24,8 @@ class App extends React.Component {
           squares: squares_copy,
           sourceIndex: sourceIndex,
           targetIndex: targetIndex,
-          isSourceMoving: false,
-          isTargetMoving: false,
+          isSourceMoving: false, //is the source currently being moved by the user
+          isTargetMoving: false, //is the target currently being moved by the user
     };
   }
 
@@ -50,9 +50,15 @@ class App extends React.Component {
     return squares
   }
 
-  placeWall(i){
+  changeSquare(i){
     const squares = this.state.squares.slice()
-    squares[i] = 3
+    //if square is empty or contains a path -> add a wall, otherwise clear
+    if(squares[i]===0||squares[i]===4){
+        squares[i] = 3
+    } else if (squares[i] === 3){
+        squares[i] = 0
+    }
+
     this.setState({
       squares: squares
     });
@@ -71,7 +77,7 @@ class App extends React.Component {
         isTargetMoving: true
       });
     }else{
-      this.placeWall(i)
+      this.changeSquare(i)
     }
   }
 
@@ -102,7 +108,7 @@ class App extends React.Component {
           targetIndex: i
       });
     } else {
-        this.placeWall(i)
+        this.changeSquare(i)
     }
 
 
