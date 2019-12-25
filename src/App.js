@@ -1,8 +1,15 @@
 import React from 'react';
-import logo from './logo.svg';
+import "bootstrap/dist/css/bootstrap.min.css";
+import "shards-ui/dist/css/shards.min.css"
+import {
+  Container,
+  Row,
+  Col,
+} from "shards-react";
 import './App.css';
-
 import Board from './Board.js';
+import ControlPanel from './ControlPanel.js';
+import Header from './Header.js';
 import dijkstra from './algorithms.js'
 
 class App extends React.Component {
@@ -139,15 +146,28 @@ class App extends React.Component {
   render() {
     return (
       <div className="App">
-        <div>
-          <Board
-            squares={this.state.squares}
-            onMouseDown={(i) => this.handleMouseDown(i)}
-            onMouseEnter={(i) => this.handleMouseEnter(i)}
-            onMouseUp={(i) => this.handleMouseUp(i)}
-            />
-        </div>
+        <Header/>
+
+        <Container className="mt-3">
+
+          <Row>
+            <Col md="12" lg="4">
+                <ControlPanel/>
+            </Col>
+            <Col md="12" lg="8" className="center-stage">
+              <Board
+                  squares={this.state.squares}
+                  onMouseDown={(i) => this.handleMouseDown(i)}
+                  onMouseEnter={(i) => this.handleMouseEnter(i)}
+                  onMouseUp={(i) => this.handleMouseUp(i)}
+              />
+            </Col>
+          </Row>
+
+
+        </Container>
       </div>
+
 
     );
   }

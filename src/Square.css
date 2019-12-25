@@ -1,15 +1,16 @@
-button{
-  border: 1px solid #999;
+.square{
+  border: 1px solid #eaeaea;
   float: left;
-  font-size: 8px;
+  font-size: 7px;
   font-weight: bold;
   line-height: 34px;
-  height: 24px;
+  height: 22px;
   margin-right: -1px;
   margin-top: -1px;
   padding: 0;
   text-align: center;
-  width: 24px;
+  width: 22px;
+  border-radius: 3px;
 }
 
 button:focus {
@@ -21,17 +22,17 @@ button:focus {
 }
 
 .square-start {
-  background: #2ed336;
+  background: #70e574; /* 1FCE6D */
 }
 
 .square-end {
-  background: #f24646;
+  background: #e88b8b; /* E94A34 */
 }
 
 .square-wall {
-  background: #cecece;
+  background: #e0e0e0;
 }
 
 .square-path {
-  background: #707bf4;
+  background: #c2dffc;
 }

@@ -56,7 +56,7 @@ class Board extends React.Component {
     }
 
     return (
-      <div
+      <div className="board"
           onMouseDown={()=> this.setState({ isMouseDown: true })}
           onMouseUp={()=> this.setState({ isMouseDown: false })}
       >
