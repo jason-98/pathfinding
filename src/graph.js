@@ -177,6 +177,7 @@ export default class Graph{
 
   }
 
+  //return all verticies to unprocessed state, do not reset board (i.e. keep walls)
   reset(){
 
     this.unprocessedVertices = this.build(this.wallMask, this.sourceIndex);
@@ -187,6 +188,12 @@ export default class Graph{
     this.processedVerticies = []
     this.finished = false;
 
+  }
+
+  //clear game board by removing all walls, and cll reset
+  clear(){
+    this.wallMask = Array(this.size).fill(0)
+    this.reset()
   }
 
   changeSourceIndex(i){

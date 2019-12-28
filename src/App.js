@@ -5,6 +5,7 @@ import { Container, Row, Col} from "shards-react";
 import './App.css';
 import Board from './Board.js';
 import ControlPanel from './ControlPanel.js';
+import Key from './Key.js';
 import Header from './Header.js';
 import Graph from './graph.js'
 
@@ -15,7 +16,7 @@ class App extends React.Component {
 
     const sourceIndex = 31
     const targetIndex = 188
-    const numSquares = 625
+    const numSquares = 625 //make this a sqaure number
 
     var graph = new Graph(numSquares,sourceIndex,targetIndex)
     graph.processAllVerticies()
@@ -31,34 +32,172 @@ class App extends React.Component {
   }
 
 
-  runAnimation(graph){
-      //clear any previous paths and visited squares
-      graph.reset()
+  //this function calls itself repeatedly and updates state on step at a time
+  animateSteps(graph){
 
-      this.animationCallBack(graph)
-    }
-
-
-  animationCallBack(graph){
-
-    //var d = new Date().getTime()
     graph.processNextVertex()
 
     this.setState({
-      squares: graph.toGrid()
+      graph: this.state.graph,
     });
 
-    //console.log(new Date().getTime()-d)
-
+    //this is essential to allow board a chance to update between steps, think of this as a yield
     if(!graph.isFinished()){
       new Promise((resolve) => setTimeout(resolve, 0)).then(() => {
-        this.animationCallBack(graph)
+        this.animateSteps(graph)
+      });
+    }
+
+}
+
+
+  handleMouseDown(i){
+
+    const squares = this.state.graph.toGrid()
+    if(squares[i]===1){
+      this.setState({
+        isSourceMoving: true
+      });
+    } else if(squares[i]===2){
+      this.setState({
+        isTargetMoving: true
+      });
+    }else{
+      this.state.graph.toggleSquare(i)
+      this.setState({
+        graph: this.state.graph,
       });
     }
 
 
+  }
 
+  handleMouseEnter(i){
+
+    if(this.state.isSourceMoving){
+        this.state.graph.changeSourceIndex(i)
+    } else if(this.state.isTargetMoving){
+        this.state.graph.changeTargetIndex(i)
+    } else {
+        this.state.graph.toggleSquare(i)
+    }
+
+    this.setState({
+      graph: this.state.graph,
+    });
+
+  }
+
+
+  handleMouseUp(i){
+
+    if(this.state.isSourceMoving){
+        this.setState({
+          isSourceMoving: false
+        });
+    } else if(this.state.isTargetMoving){
+        this.setState({
+          isTargetMoving: false
+        });
+    }
+
+    this.setState({
+      graph: this.state.graph,
+    });
+
+  }
+
+
+  handleRunPressed(){
+      this.state.graph.reset()
+      this.animateSteps(this.state.graph)
+  }
+
+  handleResetPressed(){
+
+    const graph = this.state.graph
+
+    const sourceIndex = 31
+    const targetIndex = 188
+
+    graph.changeSourceIndex(sourceIndex)
+    graph.changeTargetIndex(targetIndex)
+    graph.clear();
+    graph.processAllVerticies()
+
+    this.setState({
+      graph: this.state.graph,
+    });
+
+
+  }
+
+  render() {
+    return (
+      <div className="App">
+        <Header/>
+
+        <Container className="mt-3">
+
+          <Row>
+            <Col className="order-1 order-lg-1" md="12" lg="4">
+                <Row className="mb-4">
+                  <Col >
+                    <ControlPanel
+                      onRunPressed={() => this.handleRunPressed()}
+                      onResetPressed={() => this.handleResetPressed()}
+                    />
+                  </Col>
+                </Row>
+                <Row>
+                  <Col className="visible-md">
+                    <Key />
+                  </Col>
+                </Row>
+
+            </Col>
+            <Col className="order-2 order-lg-2 center-stage" md="12" lg="8" >
+              <Board
+                  squares={this.state.graph.toGrid()}
+                  onMouseDown={(i) => this.handleMouseDown(i)}
+                  onMouseEnter={(i) => this.handleMouseEnter(i)}
+                  onMouseUp={(i) => this.handleMouseUp(i)}
+              />
+            </Col>
+            <Col className="order-3 col-12 mt-4 hidden-md"  >
+                <Key
+                />
+            </Col>
+          </Row>
+
+
+        </Container>
+      </div>
+
+
+    );
+  }
 }
+
+export default App;
+
+
+/*
+<header className="App-header">
+  <img src={logo} className="App-logo" alt="logo" />
+  <p>
+    Edit <code>src/App.js</code> and save to reload.
+  </p>
+  <a
+    className="App-link"
+    href="https://reactjs.org"
+    target="_blank"
+    rel="noopener noreferrer"
+  >
+    Learn React
+  </a>
+</header>
+*/
 
 
 /*
@@ -133,118 +272,3 @@ class App extends React.Component {
 
   }
   */
-
-  handleMouseDown(i){
-
-    const squares = this.state.graph.toGrid()
-    if(squares[i]===1){
-      this.setState({
-        isSourceMoving: true
-      });
-    } else if(squares[i]===2){
-      this.setState({
-        isTargetMoving: true
-      });
-    }else{
-      this.state.graph.toggleSquare(i)
-      this.setState({
-        squares: this.state.graph.toGrid()
-      });
-    }
-
-
-  }
-
-
-  handleMouseEnter(i){
-
-    if(this.state.isSourceMoving){
-        this.state.graph.changeSourceIndex(i)
-    } else if(this.state.isTargetMoving){
-        this.state.graph.changeTargetIndex(i)
-    } else {
-        this.state.graph.toggleSquare(i)
-    }
-
-    this.setState({
-      squares: this.state.graph.toGrid(),
-    });
-
-  }
-
-
-
-  handleMouseUp(i){
-
-    if(this.state.isSourceMoving){
-        this.setState({
-          isSourceMoving: false
-        });
-    } else if(this.state.isTargetMoving){
-        this.setState({
-          isTargetMoving: false
-        });
-    }
-
-    this.setState({
-      squares: this.state.graph.toGrid(),
-    });
-
-  }
-
-
-  handleRunPressed(){
-      this.runAnimation(this.state.graph, this.state.sourceIndex,this.state.targetIndex)
-  }
-
-  render() {
-    return (
-      <div className="App">
-        <Header/>
-
-        <Container className="mt-3">
-
-          <Row>
-            <Col md="12" lg="4">
-                <ControlPanel
-                  onRunPressed={() => this.handleRunPressed()}
-                />
-            </Col>
-            <Col md="12" lg="8" className="center-stage">
-              <Board
-                  squares={this.state.graph.toGrid()}
-                  onMouseDown={(i) => this.handleMouseDown(i)}
-                  onMouseEnter={(i) => this.handleMouseEnter(i)}
-                  onMouseUp={(i) => this.handleMouseUp(i)}
-              />
-            </Col>
-          </Row>
-
-
-        </Container>
-      </div>
-
-
-    );
-  }
-}
-
-export default App;
-
-
-/*
-<header className="App-header">
-  <img src={logo} className="App-logo" alt="logo" />
-  <p>
-    Edit <code>src/App.js</code> and save to reload.
-  </p>
-  <a
-    className="App-link"
-    href="https://reactjs.org"
-    target="_blank"
-    rel="noopener noreferrer"
-  >
-    Learn React
-  </a>
-</header>
-*/
