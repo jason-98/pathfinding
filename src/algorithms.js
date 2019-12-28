@@ -1,23 +1,35 @@
+import Vertex from './graph.js'
+import Edge from './graph.js'
 
-class Vertex{
-  constructor(id,isVisitable){
-    this.id = id;
-    this.dist = null;
-    this.prev = null;
-    this.edges = []; // stores array of edges to neighbouring vertices
-    this.isVisitable = isVisitable
+
+//returns the next closest vertex - updates neighbour distances
+function dijkstra(unprocessedVertices){
+  //represent current vertex index
+  var currentIndex = findIndexOfMinDist(unprocessedVertices)
+  //if cureentIndex === -1 no other vertex is reachable
+  if(currentIndex===-1){
+    return null;
+  }
+  //use variable 'u' to represent current vertex index
+  var u = unprocessedVertices.splice(currentIndex,1)[0] //remove vertex from vertexSet and store in u
+
+
+  for(var j = 0; j < u.edges.length; j++){
+      const v = u.edges[j] //use variable 'v' for current edge
+
+      const alt = u.dist + v.cost
+      if(v.neighbourVertex.dist==null || alt < v.neighbourVertex.dist){
+        v.neighbourVertex.dist = alt
+        v.neighbourVertex.prev = u
+      }
   }
 
+  return u;
 }
 
-class Edge{
-    constructor(neighbourVertex,cost){
-      this.neighbourVertex = neighbourVertex;
-      this.cost = cost;
-    }
-}
 
-function dijkstra(graph, sourceIndex, targetIndex){
+
+function dijkstraOld(graph, sourceIndex, targetIndex){
 
   //determine size of each row in the graph - assumes graph is square grid
   const rowLength = Math.ceil(Math.sqrt(graph.length))
@@ -97,6 +109,8 @@ function dijkstra(graph, sourceIndex, targetIndex){
 
   }
 
+  var processedVertexIds = processedVerticies.slice().map(a => a.id);
+
   //array with indices of vertices on shortest path to target
   const pathToTarget = []
   var t = processedVerticies.pop()
@@ -113,7 +127,7 @@ function dijkstra(graph, sourceIndex, targetIndex){
   }
 
   //console.log("Path to target:", pathToTarget)
-  return pathToTarget
+  return [processedVertexIds, pathToTarget]
 }
 
 
@@ -134,6 +148,4 @@ function findIndexOfMinDist(vertexSet){
     return indexOfMin
 }
 
-
-
-export default dijkstra; // Don’t forget to use export default!
+export default dijkstra

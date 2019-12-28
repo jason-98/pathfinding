@@ -97,7 +97,7 @@ class ControlPanel extends React.Component {
 
             <Row>
                 <Col xs="6" lg="6">
-                    <Button className="btn-run" theme="primary">
+                    <Button className="btn-run" theme="primary" onClick={()=>this.props.onRunPressed()}>
                       Run
                     </Button>
                 </Col>

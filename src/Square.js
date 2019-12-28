@@ -11,7 +11,9 @@ function Square(props) {
     buttonClass = "square-wall"
   } else if (props.value===4) {
     buttonClass = "square-path"
-  } else{
+  } else if (props.value===5) {
+    buttonClass = "square-visited"
+  }else{
     buttonClass = "square-default"
   }
 
