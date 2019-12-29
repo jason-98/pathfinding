@@ -196,6 +196,66 @@ export default class Graph{
     this.reset()
   }
 
+  //handle resize board whileattempting to maintaining position of source/target squares
+  resize(size){
+
+    const prevSize = this.size;
+    this.size = size;
+
+    //determine size of each row in the graph - assumes graph is square grid
+    const prevRowLength = Math.ceil(Math.sqrt(prevSize))
+    const newRowLength = Math.ceil(Math.sqrt(size))
+    const newNumRows = newRowLength //assumes square grid
+
+    const prevTarget = this.targetIndex;
+    const prevTargetRow = Math.floor(prevTarget/prevRowLength)
+    const prevTargetCol = prevTarget%prevRowLength
+
+    const newTarget = prevTargetRow * newRowLength + prevTargetCol
+
+    //check if new target is within bounds of new board
+    if(newTarget<size){
+      this.targetIndex = newTarget
+    } else{
+      this.targetIndex = size-1 //if new target is not within bounds move it to the last valid position
+    }
+
+    const prevSource = this.sourceIndex;
+    const prevSourceRow = Math.floor(prevSource/prevRowLength)
+    const prevSourceCol = prevSource%prevRowLength
+
+    const newSource = prevSourceRow * newRowLength + prevSourceCol
+
+    //check if new source is within bounds of new board
+    if(newSource<size){
+      this.sourceIndex = newSource
+    } else if(this.targetIndex===size-1){
+      this.sourceIndex = size-2  //if new source is not within bounds and new target already is in last position move to send last
+    } else{
+      this.sourceIndex = size-1  //if new source is not within bounds move it to last valid position
+    }
+
+    const newWallMask = Array(size).fill(0)
+
+    for(var i = 0; i < newWallMask.length; i++){
+        const currentRowInNew = Math.floor(i/newRowLength)
+        const currentColInNew = i%newRowLength
+
+        if((currentColInNew+1)>prevRowLength){
+          newWallMask[i]=0 //if the current col was no present in prev grid, set mask to 0
+        }else if(this.wallMask[currentRowInNew*prevRowLength + currentColInNew]===1){
+          newWallMask[i]=1
+        }else{
+          newWallMask[i]=0
+        }
+    }
+
+    this.wallMask = newWallMask
+    this.reset()
+
+
+  }
+
   changeSourceIndex(i){
     this.sourceIndex = i
     this.reset()

@@ -25,4 +25,6 @@ function Square(props) {
 
 }
 
+//{props.index}
+
 export default Square;

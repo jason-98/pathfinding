@@ -1,9 +1,22 @@
 .board{
-  min-width: 550px;
+}
+
+.board-row{
+    float: right;
+    position: relative;
+    left: -50%; /* or right 50% */
+    text-align: left;
+    margin: 0;
 }
 
 .board-row:after {
   clear: both;
   content: "";
   display: table;
+}
+
+
+.float_center_child {
+  position: relative;
+  left: 50%;
 }

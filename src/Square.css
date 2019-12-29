@@ -11,6 +11,8 @@
   text-align: center;
   width: 22px;
   border-radius: 3px;
+  position: relative;
+  left: 50%;
 }
 
 button:focus {

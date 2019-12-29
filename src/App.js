@@ -14,11 +14,11 @@ class App extends React.Component {
   constructor(props){
     super(props)
 
-    const sourceIndex = 31
-    const targetIndex = 188
-    const numSquares = 625 //make this a sqaure number
+    const sourceIndex = 0
+    const targetIndex = 6
+    const defaultNumSquares = 256 //make this a sqaure number
 
-    var graph = new Graph(numSquares,sourceIndex,targetIndex)
+    var graph = new Graph(defaultNumSquares,sourceIndex,targetIndex)
     graph.processAllVerticies()
 
     this.state = {
@@ -39,6 +39,10 @@ class App extends React.Component {
 
     this.setState({
       graph: this.state.graph,
+      sourceIndex: this.state.sourceIndex,
+      targetIndex: this.state.targetIndex,
+      isSourceMoving: this.state.isSourceMoving,
+      isTargetMoving: this.state.isTargetMoving,
     });
 
     //this is essential to allow board a chance to update between steps, think of this as a yield
@@ -56,16 +60,29 @@ class App extends React.Component {
     const squares = this.state.graph.toGrid()
     if(squares[i]===1){
       this.setState({
-        isSourceMoving: true
+        graph: this.state.graph,
+        sourceIndex: this.state.sourceIndex,
+        targetIndex: this.state.targetIndex,
+        isSourceMoving: true,
+        isTargetMoving: this.state.isTargetMoving,
+
       });
     } else if(squares[i]===2){
       this.setState({
+        graph: this.state.graph,
+        sourceIndex: this.state.sourceIndex,
+        targetIndex: this.state.targetIndex,
+        isSourceMoving: this.state.isSourceMoving,
         isTargetMoving: true
       });
     }else{
       this.state.graph.toggleSquare(i)
       this.setState({
         graph: this.state.graph,
+        sourceIndex: this.state.sourceIndex,
+        targetIndex: this.state.targetIndex,
+        isSourceMoving: this.state.isSourceMoving,
+        isTargetMoving: this.state.isTargetMoving
       });
     }
 
@@ -84,6 +101,10 @@ class App extends React.Component {
 
     this.setState({
       graph: this.state.graph,
+      sourceIndex: this.state.sourceIndex,
+      targetIndex: this.state.targetIndex,
+      isSourceMoving: this.state.isSourceMoving,
+      isTargetMoving: this.state.isTargetMoving
     });
 
   }
@@ -93,17 +114,29 @@ class App extends React.Component {
 
     if(this.state.isSourceMoving){
         this.setState({
-          isSourceMoving: false
+          graph: this.state.graph,
+          sourceIndex: this.state.sourceIndex,
+          targetIndex: this.state.targetIndex,
+          isSourceMoving: false,
+          isTargetMoving: this.state.isTargetMoving,
         });
     } else if(this.state.isTargetMoving){
         this.setState({
+          graph: this.state.graph,
+          sourceIndex: this.state.sourceIndex,
+          targetIndex: this.state.targetIndex,
+          isSourceMoving: this.state.isSourceMoving,
           isTargetMoving: false
         });
+    } else{
+      this.setState({
+        graph: this.state.graph,
+        sourceIndex: this.state.sourceIndex,
+        targetIndex: this.state.targetIndex,
+        isSourceMoving: this.state.isSourceMoving,
+        isTargetMoving: this.state.isTargetMoving
+      });
     }
-
-    this.setState({
-      graph: this.state.graph,
-    });
 
   }
 
@@ -117,8 +150,8 @@ class App extends React.Component {
 
     const graph = this.state.graph
 
-    const sourceIndex = 31
-    const targetIndex = 188
+    const sourceIndex = 0
+    const targetIndex = 6
 
     graph.changeSourceIndex(sourceIndex)
     graph.changeTargetIndex(targetIndex)
@@ -127,13 +160,61 @@ class App extends React.Component {
 
     this.setState({
       graph: this.state.graph,
+      sourceIndex: this.state.sourceIndex,
+      targetIndex: this.state.targetIndex,
+      isSourceMoving: this.state.isSourceMoving,
+      isTargetMoving: this.state.isTargetMoving
     });
 
 
   }
 
+  handleScreenResize() {
+    console.log(window.innerWidth)
+    let maxCols;
+    if(window.innerWidth>768){
+      maxCols = 25;
+    }else{
+      maxCols = 22
+    }
+
+    const numCols = Math.min(Math.round((window.innerWidth-50)/23.0),maxCols)
+    const numSquares = Math.pow(numCols,2)
+
+    this.state.graph.resize(numSquares)
+    this.state.graph.processAllVerticies()
+
+    /*
+    var graph = new Graph(numSquares,this.state.sourceIndex,this.state.targetIndex)
+    graph.processAllVerticies()
+    */
+
+    this.setState({
+      graph: this.state.graph,
+      sourceIndex: this.state.sourceIndex,
+      targetIndex: this.state.targetIndex,
+      isSourceMoving: this.state.isSourceMoving,
+      isTargetMoving: this.state.isTargetMoving
+    });
+  }
+
+
+  //Add event listener for window resize
+  componentDidMount() {
+    this.handleScreenResize();
+    window.addEventListener("resize", this.handleScreenResize.bind(this));
+  }
+
+  //Remove event listener  for window resize
+  componentWillUnmount() {
+    window.removeEventListener("resize", this.handleScreenResize.bind(this));
+  }
+
+
+
   render() {
     return (
+
       <div className="App">
         <Header/>
 
@@ -156,7 +237,7 @@ class App extends React.Component {
                 </Row>
 
             </Col>
-            <Col className="order-2 order-lg-2 center-stage" md="12" lg="8" >
+            <Col className="order-2 order-lg-2 center-h" md="12" lg="8" >
               <Board
                   squares={this.state.graph.toGrid()}
                   onMouseDown={(i) => this.handleMouseDown(i)}
