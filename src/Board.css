@@ -7,6 +7,7 @@
     left: -50%; /* or right 50% */
     text-align: left;
     margin: 0;
+    pointer-events: none;
 }
 
 .board-row:after {
