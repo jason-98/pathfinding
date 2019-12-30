@@ -36,14 +36,7 @@ class App extends React.Component {
   animateSteps(graph){
 
     graph.processNextVertex()
-
-    this.setState({
-      graph: this.state.graph,
-      sourceIndex: this.state.sourceIndex,
-      targetIndex: this.state.targetIndex,
-      isSourceMoving: this.state.isSourceMoving,
-      isTargetMoving: this.state.isTargetMoving,
-    });
+    this.setState(this.state);
 
     //this is essential to allow board a chance to update between steps, think of this as a yield
     if(!graph.isFinished()){
@@ -56,6 +49,8 @@ class App extends React.Component {
 
 
   handleMouseDown(i){
+
+
 
     const squares = this.state.graph.toGrid()
     if(squares[i]===1){
@@ -76,13 +71,20 @@ class App extends React.Component {
         isTargetMoving: true
       });
     }else{
-      this.state.graph.toggleSquare(i)
+      if(this.state.graph.isWall(i)){
+        this.state.graph.clearWall(i)
+      }else{
+          this.state.graph.placeWall(i)
+      }
+
       this.setState({
         graph: this.state.graph,
         sourceIndex: this.state.sourceIndex,
         targetIndex: this.state.targetIndex,
         isSourceMoving: this.state.isSourceMoving,
-        isTargetMoving: this.state.isTargetMoving
+        isTargetMoving: this.state.isTargetMoving,
+        //indicate if a wall has been placed, will continue to try and place walls until mouse is released
+        placementIsWall: this.state.graph.isWall(i)
       });
     }
 
@@ -96,16 +98,14 @@ class App extends React.Component {
     } else if(this.state.isTargetMoving){
         this.state.graph.changeTargetIndex(i)
     } else {
-        this.state.graph.toggleSquare(i)
+        if(this.state.placementIsWall===true){
+          this.state.graph.placeWall(i)
+        }else{
+          this.state.graph.clearWall(i)
+        }
     }
 
-    this.setState({
-      graph: this.state.graph,
-      sourceIndex: this.state.sourceIndex,
-      targetIndex: this.state.targetIndex,
-      isSourceMoving: this.state.isSourceMoving,
-      isTargetMoving: this.state.isTargetMoving
-    });
+    this.setState(this.state);
 
   }
 
@@ -129,13 +129,7 @@ class App extends React.Component {
           isTargetMoving: false
         });
     } else{
-      this.setState({
-        graph: this.state.graph,
-        sourceIndex: this.state.sourceIndex,
-        targetIndex: this.state.targetIndex,
-        isSourceMoving: this.state.isSourceMoving,
-        isTargetMoving: this.state.isTargetMoving
-      });
+      this.setState(this.state);
     }
 
   }
@@ -158,13 +152,7 @@ class App extends React.Component {
     graph.clear();
     graph.processAllVerticies()
 
-    this.setState({
-      graph: this.state.graph,
-      sourceIndex: this.state.sourceIndex,
-      targetIndex: this.state.targetIndex,
-      isSourceMoving: this.state.isSourceMoving,
-      isTargetMoving: this.state.isTargetMoving
-    });
+    this.setState(this.state);
 
 
   }
@@ -189,13 +177,7 @@ class App extends React.Component {
     graph.processAllVerticies()
     */
 
-    this.setState({
-      graph: this.state.graph,
-      sourceIndex: this.state.sourceIndex,
-      targetIndex: this.state.targetIndex,
-      isSourceMoving: this.state.isSourceMoving,
-      isTargetMoving: this.state.isTargetMoving
-    });
+    this.setState(this.state);
   }
 
 

@@ -268,7 +268,8 @@ export default class Graph{
     this.processAllVerticies()
   }
 
-  toggleSquare(i){
+
+  placeWall(i){
 
     //do nothing if source or target square
     if(i===this.sourceIndex || i===this.targetIndex){
@@ -276,13 +277,25 @@ export default class Graph{
     }
 
     const wallMask = this.wallMask.slice();
+    wallMask[i] = 1
+    this.wallMask = wallMask
 
-    if(wallMask[i]===0){
-        wallMask[i] = 1
-    } else{
-        wallMask[i] = 0
+    //must reset and recalc verticies
+    this.reset();
+    this.processAllVerticies()
+
+
+  }
+
+  clearWall(i){
+
+    //do nothing if source or target square
+    if(i===this.sourceIndex || i===this.targetIndex){
+      return;
     }
 
+    const wallMask = this.wallMask.slice();
+    wallMask[i] = 0
     this.wallMask = wallMask
 
     //must reset and recalc verticies
@@ -290,4 +303,17 @@ export default class Graph{
     this.processAllVerticies()
 
   }
+
+  isWall(i){
+
+    const wallMask = this.wallMask.slice();
+
+    if(wallMask[i] === 1){
+      return true
+    }else{
+      return false
+    }
+
+  }
+
 }
