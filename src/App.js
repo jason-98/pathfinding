@@ -304,7 +304,7 @@ class App extends React.Component {
                 </Row>
 
             </Col>
-            <Col className="order-2 order-lg-2 center-h" md="12" lg="8" >
+            <Col className="order-2 order-lg-2" md="12" lg="8" >
               <BrowserView>
                 <Board
                     squares={this.state.graph.toGrid()}
