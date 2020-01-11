@@ -23,7 +23,8 @@ class App extends React.Component {
     const targetIndex = 6
     const defaultNumSquares = 256 //make this a sqaure number
 
-    var graph = new Graph(defaultNumSquares,sourceIndex,targetIndex)
+    //algorithm options are dijkstra and a-star
+    var graph = new Graph(defaultNumSquares,sourceIndex,targetIndex, "dijkstra")
     graph.processAllVerticies()
 
     this.state = {
@@ -204,6 +205,13 @@ class App extends React.Component {
   }
 
 
+  handleAlgorithmChange(algorithm){
+      this.state.graph.changeAlgorithm(algorithm)
+      this.state.graph.processAllVerticies()
+      this.setState(this.state);
+  }
+
+
   handleRunPressed(){
       this.state.graph.reset()
       this.animateSteps(this.state.graph)
@@ -278,6 +286,7 @@ class App extends React.Component {
                     <ControlPanel
                       onRunPressed={() => this.handleRunPressed()}
                       onResetPressed={() => this.handleResetPressed()}
+                      onAlgorithmChange={(algorithm) => this.handleAlgorithmChange(algorithm)}
                     />
                   </Col>
                 </Row>

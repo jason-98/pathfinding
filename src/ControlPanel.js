@@ -5,6 +5,7 @@ import {
   Col,
   FormSelect,
   Button,
+  FormRadio,
 } from "shards-react";
 
 import './ControlPanel.css';
@@ -13,21 +14,12 @@ import './ControlPanel.css';
 export default class ControlPanel extends React.Component {
 
   constructor(props) {
-    super(props);
-    this.toggle = this.toggle.bind(this);
-    this.state = {
-      dropdown1: false,
-      dropdown2: false,
-      dropdown3: false
-    };
-  }
+      super(props);
+      this.handleAlgorithmChange = this.handleAlgorithmChange.bind(this);
+    }
 
-  toggle(nr) {
-    this.setState(prevState => {
-      const newState = {};
-      newState[`dropdown${nr}`] = !prevState[`dropdown${nr}`];
-      return { ...prevState, ...newState };
-    });
+  handleAlgorithmChange(event){
+    this.props.onAlgorithmChange(event.target.value)
   }
 
 
@@ -45,12 +37,9 @@ export default class ControlPanel extends React.Component {
             <Row className="mb-3">
               <Col md="12" lg="8">Select algorithm:</Col>
               <Col md="12" lg="12">
-              <FormSelect className="limit-height">
-                <option value="first">Dyjkstra</option>
-                <option value="second">A*</option>
-                <option value="third" disabled>
-                  This option is disabled.
-                </option>
+              <FormSelect className="limit-height" onChange={this.handleAlgorithmChange}>
+                <option value="dijkstra">Dijkstra</option>
+                <option value="a-star">A*</option>
               </FormSelect>
 
 
@@ -65,8 +54,6 @@ export default class ControlPanel extends React.Component {
               </Col>
 
             </Row>
-
-
 
 
             <Row>

@@ -1,20 +1,29 @@
 
-import dijkstra from './algorithms.js'
+import dijkstra, {a_star} from './algorithms.js'
 
 
 export class Vertex{
   constructor(id,isVisitable){
     this.id = id;
-    this.dist = null;
+    this.fcost = null;  //cost (or distance) from source node to this node
+    this.hcost = null;  //heuristic cost - estimated cost to destination
     this.prev = null;
     this.edges = []; // stores array of edges to neighbouring vertices
     this.isVisitable = isVisitable
   }
 
+  getTotalCost(){
+    if(this.fcost===null){
+      return null
+    }else{
+      return this.fcost + this.hcost
+    }
+  }
+
 }
 
 export class Edge{
-    constructor(neighbourVertex,cost){
+    constructor(neighbourVertex, cost){
       this.neighbourVertex = neighbourVertex;
       this.cost = cost;
     }
@@ -22,27 +31,29 @@ export class Edge{
 
 export default class Graph{
 
-  constructor(size, sourceIndex, targetIndex){
+  //algorithm options are dijkstra and a-star
+  constructor(size, sourceIndex, targetIndex, algorithm){
     this.size = size;
     this.sourceIndex = sourceIndex;
     this.targetIndex = targetIndex;
+    this.algorithm = algorithm;
 
     // 0 corresponds to no wall at a given index, 1 corresponds to wall at index
     this.wallMask = Array(size).fill(0)
 
-    this.unprocessedVertices = this.build(this.wallMask, sourceIndex);
+    this.unprocessedVertices = this.build(this.wallMask, sourceIndex, targetIndex, algorithm);
 
     //set distace to source vertex to 0
-    this.unprocessedVertices[sourceIndex].dist=0
+    this.unprocessedVertices[sourceIndex].fcost=0
 
     this.processedVerticies = []
     this.finished = false;
   }
 
-  build(wallMask, sourceIndex){
+  build(wallMask, sourceIndex, targetIndex, algorithm){
 
-    //if no sourceIndex is set return empty list []
-    if(sourceIndex===-1){
+    //if no sourceIndex or targetIndex is set return empty list []
+    if(sourceIndex===-1 || targetIndex===-1){
       return []
     }
 
@@ -63,7 +74,9 @@ export default class Graph{
       vertexSet.push(new Vertex(i,isVisitable))
     }
 
-    //determine all neighbours
+
+
+    //determine all neighbours, and add h-cost (a-star only)
     for(var m = 0; m < vertexSet.length; m++){
       const rowIndex = Math.floor(m/rowLength) //interpret m as bxb matrix
       const colIndex = m % rowLength  //interpret m as bxb matrix
@@ -80,14 +93,26 @@ export default class Graph{
 
           //only add to list of neighbours if able to visit
           if(neighbour.isVisitable){
-              vertexSet[m].edges.push(new Edge(neighbour, isDiagonal ? 1.414 : 1)) //diagonal has cost of sqrt(2) = 1.14
+              vertexSet[m].edges.push(new Edge(neighbour, isDiagonal ? 1.414 : 1)) //diagonal has cost of sqrt(2) = 1.414
           }
 
         }
       }
+
+      //must add h-cost for a-star algorithm
+      if(algorithm==="a-star"){
+        const targetRowIndex = Math.floor(targetIndex/rowLength) //interpret m as bxb matrix
+        const targetColIndex = targetIndex % rowLength  //interpret m as bxb matrix
+
+        //h-cost is calculated as distance between current node and target node (ignoring walls)
+        const hcost = Math.sqrt(Math.pow(rowIndex-targetRowIndex,2)+Math.pow(colIndex - targetColIndex,2))
+        vertexSet[m].hcost = hcost
+      }
     }
+
     return vertexSet;
   }
+
 
   processNextVertex(){
     if(this.finished){
@@ -95,7 +120,13 @@ export default class Graph{
       return null;
     }
 
-    var nextClosestVertex = dijkstra(this.unprocessedVertices)
+    let nextClosestVertex
+    if(this.algorithm==="a-star"){
+        nextClosestVertex = a_star(this.unprocessedVertices)
+    } else { //else use dijkstra
+        nextClosestVertex = dijkstra(this.unprocessedVertices)
+    }
+
 
     //happens if no path from source to target
     if(nextClosestVertex===null){
@@ -186,7 +217,7 @@ export default class Graph{
   //return all verticies to unprocessed state, do not reset board (i.e. keep walls)
   reset(){
 
-    this.unprocessedVertices = this.build(this.wallMask, this.sourceIndex);
+    this.unprocessedVertices = this.build(this.wallMask, this.sourceIndex, this.targetIndex, this.algorithm);
 
     // check if there is a start index set
     if(this.unprocessedVertices.length===0){
@@ -194,7 +225,7 @@ export default class Graph{
         this.finished = false;
     } else{
         //set distace to source vertex to 0
-        this.unprocessedVertices[this.sourceIndex].dist=0
+        this.unprocessedVertices[this.sourceIndex].fcost=0
 
         this.processedVerticies = []
         this.finished = false;
@@ -206,6 +237,11 @@ export default class Graph{
   //clear game board by removing all walls, and cll reset
   clear(){
     this.wallMask = Array(this.size).fill(0)
+    this.reset()
+  }
+
+  changeAlgorithm(algorithm){
+    this.algorithm = algorithm;
     this.reset()
   }
 

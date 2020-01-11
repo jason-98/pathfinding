@@ -3,7 +3,7 @@ import Edge from './graph.js'
 
 
 //returns the next closest vertex - updates neighbour distances
-function dijkstra(unprocessedVertices){
+export default function dijkstra(unprocessedVertices){
   //represent current vertex index
   var currentIndex = findIndexOfMinDist(unprocessedVertices)
   //if cureentIndex === -1 no other vertex is reachable
@@ -17,9 +17,36 @@ function dijkstra(unprocessedVertices){
   for(var j = 0; j < u.edges.length; j++){
       const v = u.edges[j] //use variable 'v' for current edge
 
-      const alt = u.dist + v.cost
-      if(v.neighbourVertex.dist==null || alt < v.neighbourVertex.dist){
-        v.neighbourVertex.dist = alt
+      const alt = u.fcost + v.cost
+      if(v.neighbourVertex.fcost==null || alt < v.neighbourVertex.fcost){
+        v.neighbourVertex.fcost = alt
+        v.neighbourVertex.prev = u
+      }
+  }
+
+  return u;
+}
+
+
+//returns the next closest vertex - updates neighbour fcosts
+export function a_star(unprocessedVertices){
+  //represent current vertex index
+  var currentIndex = findIndexOfMinTotalCost(unprocessedVertices)
+  //if cureentIndex === -1 no other vertex is reachable
+  if(currentIndex===-1){
+    return null;
+  }
+  //use variable 'u' to represent current vertex index
+  var u = unprocessedVertices.splice(currentIndex,1)[0] //remove vertex from vertexSet and store in u
+
+
+  //update neighbour fcosts if better route found
+  for(var j = 0; j < u.edges.length; j++){
+      const v = u.edges[j] //use variable 'v' for current edge
+
+      const alt = u.fcost + v.cost
+      if(v.neighbourVertex.fcost==null || alt < v.neighbourVertex.fcost){
+        v.neighbourVertex.fcost = u.fcost + v.cost
         v.neighbourVertex.prev = u
       }
   }
@@ -75,7 +102,7 @@ function dijkstraOld(graph, sourceIndex, targetIndex){
   var processedVerticies = []
 
   //set distace to source vertex to 0
-  vertexSet[sourceIndex].dist=0
+  vertexSet[sourceIndex].fcost=0
 
   while(vertexSet.length>0){
 
@@ -98,9 +125,9 @@ function dijkstraOld(graph, sourceIndex, targetIndex){
     for(var j = 0; j < u.edges.length; j++){
         const v = u.edges[j] //use variable 'v' for current edge
 
-        const alt = u.dist + v.cost
-        if(v.neighbourVertex.dist==null || alt < v.neighbourVertex.dist){
-          v.neighbourVertex.dist = alt
+        const alt = u.fcost + v.cost
+        if(v.neighbourVertex.fcost==null || alt < v.neighbourVertex.fcost){
+          v.neighbourVertex.fcost = alt
           v.neighbourVertex.prev = u
         }
     }
@@ -136,7 +163,7 @@ function findIndexOfMinDist(vertexSet){
     var indexOfMin = -1 // if -1 is returned, no min was found
 
     for(var i=0; i < vertexSet.length; i++){
-      const dist = vertexSet[i].dist
+      const dist = vertexSet[i].fcost
       if(dist===null){
         continue; //dont consider distance if it is null
       }
@@ -148,4 +175,19 @@ function findIndexOfMinDist(vertexSet){
     return indexOfMin
 }
 
-export default dijkstra
+function findIndexOfMinTotalCost(vertexSet){
+    var minDist = 1000000000; //some large number
+    var indexOfMin = -1 // if -1 is returned, no min was found
+
+    for(var i=0; i < vertexSet.length; i++){
+      const dist = vertexSet[i].getTotalCost()
+      if(dist===null){
+        continue; //dont consider distance if it is null
+      }
+      if(dist< minDist){
+        minDist = dist
+        indexOfMin = i
+      }
+    }
+    return indexOfMin
+}
