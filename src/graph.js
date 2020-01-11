@@ -66,7 +66,7 @@ export default class Graph{
     const vertexSet = []
     for(var i =0; i < this.size; i++){
       let isVisitable
-      if(wallMask[i]===0){ //no wall
+      if(wallMask[i]===0 || i===targetIndex){ //no wall
         isVisitable = true
       }else{
         isVisitable = false;
