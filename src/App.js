@@ -227,11 +227,11 @@ class App extends React.Component {
 
     const graph = this.state.graph
 
-    const sourceIndex = 0
-    const targetIndex = 6
+    //const sourceIndex = 0
+    //const targetIndex = 6
 
-    graph.changeSourceIndex(sourceIndex)
-    graph.changeTargetIndex(targetIndex)
+    //graph.changeSourceIndex(sourceIndex)
+    //graph.changeTargetIndex(targetIndex)
     graph.clear();
     graph.processAllVerticies()
 
