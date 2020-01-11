@@ -9,6 +9,11 @@ import Key from './Key.js';
 import Header from './Header.js';
 import Graph from './graph.js'
 
+import {
+  BrowserView,
+  MobileView
+} from "react-device-detect";
+
 class App extends React.Component {
 
   constructor(props){
@@ -49,9 +54,6 @@ class App extends React.Component {
 
 
   handleMouseDown(i){
-
-
-
     const squares = this.state.graph.toGrid()
     if(squares[i]===1){
       this.setState({
@@ -91,8 +93,8 @@ class App extends React.Component {
 
   }
 
+ //only triggers if mouse is down as well
   handleMouseEnter(i){
-
     if(this.state.isSourceMoving){
         this.state.graph.changeSourceIndex(i)
     } else if(this.state.isTargetMoving){
@@ -135,6 +137,73 @@ class App extends React.Component {
   }
 
 
+  //replaces mouseEvents for mobile
+  handleTouchStart(i){
+
+    if(this.state.isSourceMoving){
+        this.state.graph.changeSourceIndex(i)
+        this.setState({
+          graph: this.state.graph,
+          sourceIndex: this.state.sourceIndex,
+          targetIndex: this.state.targetIndex,
+          isSourceMoving: false,
+          isTargetMoving: this.state.isTargetMoving,
+        });
+    } else if (this.state.isTargetMoving){
+        this.state.graph.changeTargetIndex(i)
+        this.setState({
+          graph: this.state.graph,
+          sourceIndex: this.state.sourceIndex,
+          targetIndex: this.state.targetIndex,
+          isSourceMoving: this.state.isSourceMoving,
+          isTargetMoving: false
+        });
+    }else{
+
+      const squares = this.state.graph.toGrid()
+      if(squares[i]===1){
+        this.state.graph.changeSourceIndex(-1)
+        this.setState({
+          graph: this.state.graph,
+          sourceIndex: this.state.sourceIndex,
+          targetIndex: this.state.targetIndex,
+          isSourceMoving: true,
+          isTargetMoving: this.state.isTargetMoving,
+
+        });
+      } else if(squares[i]===2){
+        this.state.graph.changeTargetIndex(-1)
+        this.setState({
+          graph: this.state.graph,
+          sourceIndex: this.state.sourceIndex,
+          targetIndex: this.state.targetIndex,
+          isSourceMoving: this.state.isSourceMoving,
+          isTargetMoving: true
+        });
+      } else {
+          if(this.state.graph.isWall(i)){
+              this.state.graph.clearWall(i)
+          }else{
+              this.state.graph.placeWall(i)
+          }
+
+          this.setState({
+            graph: this.state.graph,
+            sourceIndex: this.state.sourceIndex,
+            targetIndex: this.state.targetIndex,
+            isSourceMoving: this.state.isSourceMoving,
+            isTargetMoving: this.state.isTargetMoving,
+            //indicate if a wall has been placed, will continue to try and place walls until mouse is released
+            placementIsWall: this.state.graph.isWall(i)
+          });
+      }
+
+    }
+
+
+  }
+
+
   handleRunPressed(){
       this.state.graph.reset()
       this.animateSteps(this.state.graph)
@@ -167,7 +236,7 @@ class App extends React.Component {
     }
 
     const numCols = Math.min(Math.round((window.innerWidth-50)/23.0),maxCols)
-    const numSquares = Math.pow(numCols,2)
+    const numSquares = Math.pow(numCols,2) //NB numSquares must be a square number
 
     this.state.graph.resize(numSquares)
     this.state.graph.processAllVerticies()
@@ -220,12 +289,24 @@ class App extends React.Component {
 
             </Col>
             <Col className="order-2 order-lg-2 center-h" md="12" lg="8" >
-              <Board
-                  squares={this.state.graph.toGrid()}
-                  onMouseDown={(i) => this.handleMouseDown(i)}
-                  onMouseEnter={(i) => this.handleMouseEnter(i)}
-                  onMouseUp={(i) => this.handleMouseUp(i)}
-              />
+              <BrowserView>
+                <Board
+                    squares={this.state.graph.toGrid()}
+                    onMouseDown={(i) => this.handleMouseDown(i)}
+                    onMouseEnter={(i) => this.handleMouseEnter(i)}
+                    onMouseUp={(i) => this.handleMouseUp(i)}
+                />
+              </BrowserView>
+
+              <MobileView>
+                <Board
+                    squares={this.state.graph.toGrid()}
+                    onMouseDown={(i) => this.handleTouchStart(i)}
+                    onMouseEnter={(i) => console.log()}
+                    onMouseUp={(i) => console.log()}
+                />
+              </MobileView>
+
             </Col>
             <Col className="order-3 col-12 mt-4 hidden-md"  >
                 <Key

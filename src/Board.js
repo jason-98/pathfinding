@@ -11,6 +11,7 @@ class Board extends React.Component {
     };
   }
 
+
   renderSquare(i) {
     return (
       <Square
@@ -19,6 +20,7 @@ class Board extends React.Component {
         onMouseEnter={() => this.handleMouseEnter(i)}
         onMouseDown={() => this.props.onMouseDown(i)}
         onMouseUp={() => this.props.onMouseUp(i)}
+        //onTouch= {(e)=> this.printConsole(e.touches[0].screenX)}
       />
     );
   }
@@ -39,10 +41,12 @@ class Board extends React.Component {
 
   //check if mouse is currently being pressed down before bubbling up
   handleMouseEnter(i){
+
     if(this.state.isMouseDown){
         this.props.onMouseEnter(i)
     }
   }
+
 
 
 
@@ -56,14 +60,35 @@ class Board extends React.Component {
     }
 
     return (
-      <div className="board"
+        <div className="board"
           onMouseDown={()=> this.setState({ isMouseDown: true })}
           onMouseUp={()=> this.setState({ isMouseDown: false })}
-      >
-        {rows}
-      </div>
+          >
+          {rows}
+        </div>
     );
   }
 }
+
+/*
+printConsole(message){
+  var console = this.state.console
+  console+=message+"\n"
+  this.setState({
+    isMouseDown: this.state.isMouseDown,
+    console: console
+  })
+}
+
+import Swipe from 'react-easy-swipe';
+
+//returning true from this functions prevents the view from scolling on swipe (for mobile)
+onSwipeMove(event) {
+  return true;
+}
+
+<Swipe onSwipeMove={this.onSwipeMove} >
+</Swipe>
+*/
 
 export default Board;

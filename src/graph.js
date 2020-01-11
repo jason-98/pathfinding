@@ -40,6 +40,12 @@ export default class Graph{
   }
 
   build(wallMask, sourceIndex){
+
+    //if no sourceIndex is set return empty list []
+    if(sourceIndex===-1){
+      return []
+    }
+
     //determine size of each row in the graph - assumes graph is square grid
     const rowLength = Math.ceil(Math.sqrt(this.size))
 
@@ -182,11 +188,18 @@ export default class Graph{
 
     this.unprocessedVertices = this.build(this.wallMask, this.sourceIndex);
 
-    //set distace to source vertex to 0
-    this.unprocessedVertices[this.sourceIndex].dist=0
+    // check if there is a start index set
+    if(this.unprocessedVertices.length===0){
+        this.processedVerticies = []
+        this.finished = false;
+    } else{
+        //set distace to source vertex to 0
+        this.unprocessedVertices[this.sourceIndex].dist=0
 
-    this.processedVerticies = []
-    this.finished = false;
+        this.processedVerticies = []
+        this.finished = false;
+    }
+
 
   }
 
