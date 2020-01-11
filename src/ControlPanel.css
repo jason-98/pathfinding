@@ -15,16 +15,20 @@
 .btn-run{
   background-color: #7BABED;
   border-color: #7BABED;
-  width: 100%;
 }
 
 .btn-clear{
   background-color: #e88b8b;
   border-color: #e88b8b;
-  width: 100%;
 }
 
 .btn-clear:hover{
   background-color: #E94A34;
   border-color: #E94A34;
 }
+
+.select{
+  width: 100%;
+}
+
+.hidden { display:none; }

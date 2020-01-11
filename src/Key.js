@@ -1,9 +1,5 @@
 import React from 'react';
-import {
-  Container,
-  Row,
-  Col
-} from "shards-react";
+import { Row, Col } from 'antd';
 
 import './ControlPanel.css';
 import Square from './Square';
@@ -15,7 +11,6 @@ export default class Key extends React.Component {
     return (
       <div>
         <div className="panel p-3 mb-4">
-          <Container>
 
             <Row>
               <Col>
@@ -25,7 +20,7 @@ export default class Key extends React.Component {
 
 
             <Row className="mb-1">
-              <Col xs="2" lg="2">
+              <Col xs={4} lg={4}>
                 <Square
                   index={0}
                   value={1}
@@ -35,11 +30,11 @@ export default class Key extends React.Component {
                 />
 
               </Col>
-              <Col xs="4" lg="4">
+              <Col xs={8} lg={8}>
                   Source
               </Col>
 
-              <Col xs="2" lg="2">
+              <Col xs={4} lg={4}>
                 <Square
                   index={0}
                   value={2}
@@ -49,7 +44,7 @@ export default class Key extends React.Component {
                 />
 
               </Col>
-              <Col xs="4" lg="4">
+              <Col xs={8} lg={8}>
                   Target
               </Col>
             </Row>
@@ -58,7 +53,7 @@ export default class Key extends React.Component {
 
 
             <Row className="mb-1">
-              <Col xs="2" lg="2">
+              <Col xs={4} lg={4}>
                 <Square
                   index={0}
                   value={4}
@@ -68,11 +63,11 @@ export default class Key extends React.Component {
                 />
 
               </Col>
-              <Col xs="4" lg="4">
+              <Col xs={8} lg={8}>
                   Path
               </Col>
 
-              <Col xs="2" lg="2">
+              <Col xs={4} lg={4}>
                 <Square
                   index={0}
                   value={3}
@@ -82,14 +77,14 @@ export default class Key extends React.Component {
                 />
 
               </Col>
-              <Col xs="4" lg="4">
+              <Col xs={8} lg={8}>
                   Wall
               </Col>
             </Row>
 
 
             <Row className="mb-2">
-              <Col xs="2" lg="2">
+              <Col xs={4} lg={4}>
                 <Square
                   index={0}
                   value={0}
@@ -99,13 +94,13 @@ export default class Key extends React.Component {
                 />
 
               </Col>
-              <Col xs="4" lg="4">
+              <Col xs={8} lg={8}>
                   Empty
               </Col>
             </Row>
 
             <Row className="mb-2">
-              <Col xs="12" lg="12">
+              <Col xs={24} lg={24}>
                   <p className="text-small"> Click and drag to move source and target squares</p>
                   <p className="text-small"> Click and/or drag to place walls in the grid</p>
 
@@ -113,8 +108,6 @@ export default class Key extends React.Component {
             </Row>
 
 
-
-          </Container>
         </div>
 
       </div>

@@ -48,6 +48,8 @@ export default class Graph{
 
     this.processedVerticies = []
     this.finished = false;
+
+    this.eplison = 1 //weighting on a-star heuristic function - defaults to 1
   }
 
   build(wallMask, sourceIndex, targetIndex, algorithm){
@@ -106,7 +108,7 @@ export default class Graph{
 
         //h-cost is calculated as distance between current node and target node (ignoring walls)
         const hcost = Math.sqrt(Math.pow(rowIndex-targetRowIndex,2)+Math.pow(colIndex - targetColIndex,2))
-        vertexSet[m].hcost = hcost
+        vertexSet[m].hcost = this.eplison * hcost
       }
     }
 
@@ -243,6 +245,13 @@ export default class Graph{
   changeAlgorithm(algorithm){
     this.algorithm = algorithm;
     this.reset()
+    this.processAllVerticies()
+  }
+
+  changeEpsilon(value){
+    this.eplison = value
+    this.reset()
+    this.processAllVerticies()
   }
 
   //handle resize board whileattempting to maintaining position of source/target squares

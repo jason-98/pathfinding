@@ -207,8 +207,12 @@ class App extends React.Component {
 
   handleAlgorithmChange(algorithm){
       this.state.graph.changeAlgorithm(algorithm)
-      this.state.graph.processAllVerticies()
       this.setState(this.state);
+  }
+
+  handleEpsilonChange(value){
+    this.state.graph.changeEpsilon(value)
+    this.setState(this.state);
   }
 
 
@@ -216,6 +220,8 @@ class App extends React.Component {
       this.state.graph.reset()
       this.animateSteps(this.state.graph)
   }
+
+
 
   handleResetPressed(){
 
@@ -287,6 +293,7 @@ class App extends React.Component {
                       onRunPressed={() => this.handleRunPressed()}
                       onResetPressed={() => this.handleResetPressed()}
                       onAlgorithmChange={(algorithm) => this.handleAlgorithmChange(algorithm)}
+                      onEpsilonChange={(value) => this.handleEpsilonChange(value)}
                     />
                   </Col>
                 </Row>
