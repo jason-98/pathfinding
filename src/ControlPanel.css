@@ -13,18 +13,23 @@
 }
 
 .btn-run{
-  background-color: #7BABED;
-  border-color: #7BABED;
+  background-color: #51B4F9;
+  border-color: #51B4F9;
+}
+
+.btn-run:hover{
+  background-color: #0F8BE1;
+  border-color: #0F8BE1;
 }
 
 .btn-clear{
-  background-color: #e88b8b;
-  border-color: #e88b8b;
+  background-color: #F08578;
+  border-color: #F08578;
 }
 
 .btn-clear:hover{
-  background-color: #E94A34;
-  border-color: #E94A34;
+  background-color: #D86152;
+  border-color: #D86152;
 }
 
 .select{

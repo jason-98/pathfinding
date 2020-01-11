@@ -115,15 +115,15 @@ export default class ControlPanel extends React.Component {
           </Row>
 
 
-          <Row>
-              <Col xs={12} lg={12}>
+          <Row gutter={[16, 16]}>
+              <Col xs={12} lg={12} >
                   <Button className="btn-run" block type="primary" onClick={()=>this.props.onRunPressed()}>
                       Play
                   </Button>
               </Col>
-              <Col xs={12} lg={12}>
+              <Col  xs={12} lg={12} >
                   <Button className="btn-clear" block type="danger" onClick={()=>this.props.onResetPressed()} >
-                    Reset
+                    Clear
                   </Button>
 
               </Col>

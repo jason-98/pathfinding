@@ -26,25 +26,25 @@ button:focus {
 
 .square-start {
   background: #70e574; /* 1FCE6D */
-  border: 1px solid #5fbf62;
+  border: 1px solid #389339;
 
 }
 
 .square-end {
   background: #e88b8b; /* E94A34 */
-  border: 1px solid #ba4c4c;
+  border: 1px solid #8e3939;
 }
 
 .square-wall {
-  background: #e8e8e8;
-  border: 1px solid #cccccc;
+  background: #cccccc;
+  border: 1px solid #898989;
   /*animation-name: grow;
   animation-duration: 0.1s;*/
 }
 
 .square-path {
-  background: #c2dffc;
-  border: 1px solid #8cc5ff;
+  background: #abd4fc;
+  border: 1px solid #479ff7;
 }
 
 .square-visited {

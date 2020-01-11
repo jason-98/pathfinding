@@ -84,6 +84,21 @@ export default class Key extends React.Component {
 
 
             <Row className="mb-2">
+
+              <Col xs={4} lg={4}>
+                <Square
+                  index={0}
+                  value={5}
+                  onMouseEnter={() => console.log()}
+                  onMouseDown={() => console.log()}
+                  onMouseUp={() => console.log()}
+                />
+
+              </Col>
+              <Col xs={8} lg={8}>
+                  Visited
+              </Col>
+
               <Col xs={4} lg={4}>
                 <Square
                   index={0}
