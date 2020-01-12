@@ -1,5 +1,5 @@
 
-import dijkstra, {a_star} from './algorithms.js'
+import dijkstra, {a_star, depth_first, greedy_best_first} from './algorithms.js'
 
 
 export class Vertex{
@@ -101,7 +101,7 @@ export default class Graph{
         }
       }
 
-      //must add h-cost for a-star algorithm
+      //must add h-cost for a-star and greedy best first search algorithm - NB no eplison scaling factor for best-first
       if(algorithm==="a-star"){
         const targetRowIndex = Math.floor(targetIndex/rowLength) //interpret m as bxb matrix
         const targetColIndex = targetIndex % rowLength  //interpret m as bxb matrix
@@ -109,6 +109,13 @@ export default class Graph{
         //h-cost is calculated as distance between current node and target node (ignoring walls)
         const hcost = Math.sqrt(Math.pow(rowIndex-targetRowIndex,2)+Math.pow(colIndex - targetColIndex,2))
         vertexSet[m].hcost = this.eplison * hcost
+      } else if(algorithm==="greedy-best-first"){
+        const targetRowIndex = Math.floor(targetIndex/rowLength) //interpret m as bxb matrix
+        const targetColIndex = targetIndex % rowLength  //interpret m as bxb matrix
+
+        //h-cost is calculated as distance between current node and target node (ignoring walls)
+        const hcost = Math.sqrt(Math.pow(rowIndex-targetRowIndex,2)+Math.pow(colIndex - targetColIndex,2))
+        vertexSet[m].hcost = hcost //no eplison scaling factor
       }
     }
 
@@ -122,9 +129,22 @@ export default class Graph{
       return null;
     }
 
-    let nextClosestVertex
+    let nextClosestVertex =null
     if(this.algorithm==="a-star"){
         nextClosestVertex = a_star(this.unprocessedVertices)
+    } else if(this.algorithm==="depth-first"){
+        if(this.sourceIndex!==-1 && this.targetIndex!==-1){
+          // if this is the first time time this function is called, add source vertex
+          if(this.processedVerticies.length===0){
+            this.processedVerticies.push(this.unprocessedVertices[this.sourceIndex])
+          }
+          // pass the last vertex that was processed
+          nextClosestVertex = depth_first(this.processedVerticies[this.processedVerticies.length-1])
+        }
+
+    } else if(this.algorithm==="greedy-best-first"){
+        nextClosestVertex = greedy_best_first(this.unprocessedVertices)
+
     } else { //else use dijkstra
         nextClosestVertex = dijkstra(this.unprocessedVertices)
     }
@@ -162,6 +182,7 @@ export default class Graph{
     //array with indices of vertices on shortest path to target
     const pathToTarget = []
     var t = processedVerticies.pop()
+
 
     //check if no path exisits
     if(t===undefined){

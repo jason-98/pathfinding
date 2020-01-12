@@ -53,6 +53,11 @@ export default class ControlPanel extends React.Component {
     }
 
   handleAlgorithmChange(value){
+    //breadth first search and dijkstra are equivalent on this type of graph, so just use dijkstra
+    if(value==="breadth-first"){
+      value = "dijkstra"
+    }
+
     this.setState({
       algorithm: value,
       epsilon: this.state.epsilon,
@@ -85,8 +90,12 @@ export default class ControlPanel extends React.Component {
             <Col md={24} lg={16}> Select algorithm: </Col>
             <Col span={24}>
               <Select className="select" defaultValue="dijkstra" onSelect={(value)=>this.handleAlgorithmChange(value)}>
-                <Option value="dijkstra">Dijkstra</Option>
                 <Option value="a-star">A*</Option>
+                <Option value="dijkstra">Dijkstra</Option>
+                <Option value="greedy-best-first">Best-first search</Option>
+                <Option value="depth-first">Depth-first search</Option>
+                <Option value="breadth-first">Breadth-first search</Option>
+
               </Select>
             </Col>
           </Row>
@@ -99,7 +108,7 @@ export default class ControlPanel extends React.Component {
             </Col>
           </Row>
 
-          <Row className={this.state.algorithm==="dijkstra" ? 'mb-2 hidden' : ''}>
+          <Row className={this.state.algorithm!=="a-star" ? 'mb-2 hidden' : ''}>
             <Col md={24} lg={24}> Select heuristic weight ε: </Col>
             <Col className="pl-3 pr-3" span={24}>
               <Slider tipFormatter={formatter} marks={marks} step={null} defaultValue={33} onChange={(position)=>this.handleEpsilonChange(position)}/>
