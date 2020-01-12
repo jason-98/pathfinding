@@ -12,7 +12,6 @@ export default class Key extends React.Component {
       <div>
         <div className="p-2 mb-4">
 
-
             <Row  type="flex" justify="left" align="top">
 
               <Col className="mb-1" xs={{ span: 4, offset: 0}} sm={3} md={{ span: 2, offset: 2}} lg={{ span: 2, offset: 1}} xl={{ span: 2, offset: 2}}>
