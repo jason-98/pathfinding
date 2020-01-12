@@ -262,6 +262,7 @@ export default class Graph{
 
     //determine size of each row in the graph - assumes graph is square grid
     const prevRowLength = Math.ceil(Math.sqrt(prevSize))
+    const prevNumRows = prevRowLength //assumes square grid
     const newRowLength = Math.ceil(Math.sqrt(size))
     const newNumRows = newRowLength //assumes square grid
 
@@ -270,12 +271,21 @@ export default class Graph{
     const prevTargetCol = prevTarget%prevRowLength
 
     const newTarget = prevTargetRow * newRowLength + prevTargetCol
+    const newTargetRow = Math.floor(newTarget/newRowLength)
+    const newTargetCol = newTarget%newRowLength
 
-    //check if new target is within bounds of new board
-    if(newTarget<size){
-      this.targetIndex = newTarget
+    //check if new target is outside bounds of new board
+    if(prevTargetRow>=newRowLength && prevTargetCol>=newRowLength){
+      //if outside bound below AND to right of board
+      this.targetIndex = newRowLength * newRowLength -1
+    } else if(prevTargetRow>=newRowLength){
+      //if outside bound below board
+      this.targetIndex = (newRowLength-1) * newRowLength + newTargetCol
+    } else if(prevTargetCol>=newRowLength){
+      //if outside bound to right of board
+      this.targetIndex = (newTargetRow-1) * newRowLength + (newRowLength -1)
     } else{
-      this.targetIndex = size-1 //if new target is not within bounds move it to the last valid position
+      this.targetIndex = newTarget
     }
 
     const prevSource = this.sourceIndex;
@@ -283,14 +293,28 @@ export default class Graph{
     const prevSourceCol = prevSource%prevRowLength
 
     const newSource = prevSourceRow * newRowLength + prevSourceCol
+    const newSourceRow = Math.floor(newSource/newRowLength)
+    const newSourceCol = newSource%newRowLength
 
-    //check if new source is within bounds of new board
-    if(newSource<size){
-      this.sourceIndex = newSource
-    } else if(this.targetIndex===size-1){
-      this.sourceIndex = size-2  //if new source is not within bounds and new target already is in last position move to send last
+
+    //check if new source is outside bounds of new board
+    if(prevSourceRow>=newRowLength && prevSourceCol>=newRowLength){
+      //if outside bound below AND to right of board
+      this.sourceIndex = newRowLength * newRowLength -1
+    } else if(prevSourceRow>=newRowLength){
+      //if outside bound below board
+      this.sourceIndex = (newRowLength-1) * newRowLength + newSourceCol
+    } else if(prevSourceCol>=newRowLength){
+      //if outside bound to right of board
+      this.sourceIndex = (newSourceRow-1) * newRowLength + (newRowLength -1)
     } else{
-      this.sourceIndex = size-1  //if new source is not within bounds move it to last valid position
+      this.sourceIndex = newSource
+    }
+
+    //check that source and target are not on same square after resize
+    if(this.sourceIndex===this.targetIndex){
+      // if they are on same square, move source 1 square to left
+      this.sourceIndex -= 1
     }
 
     const newWallMask = Array(size).fill(0)

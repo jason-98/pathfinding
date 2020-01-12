@@ -19,9 +19,9 @@ class App extends React.Component {
   constructor(props){
     super(props)
 
-    const sourceIndex = 0
-    const targetIndex = 6
-    const defaultNumSquares = 256 //make this a sqaure number
+    const sourceIndex = 104
+    const targetIndex = 286
+    const defaultNumSquares = 625 //make this a sqaure number
 
     //algorithm options are dijkstra and a-star
     var graph = new Graph(defaultNumSquares,sourceIndex,targetIndex, "dijkstra")
@@ -228,7 +228,7 @@ class App extends React.Component {
     const graph = this.state.graph
 
     //const sourceIndex = 0
-    //const targetIndex = 6
+    //const targetIndex = 208
 
     //graph.changeSourceIndex(sourceIndex)
     //graph.changeTargetIndex(targetIndex)
