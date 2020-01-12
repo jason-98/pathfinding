@@ -114,6 +114,14 @@ export default class ControlPanel extends React.Component {
             </Col>
           </Row>
 
+          <Row className="mt-2 mb-3">
+            <Col xs={24} lg={24}>
+                <h4> Instructions</h4>
+                <p className="text-small"> Click and drag to move source and target squares</p>
+                <p className="text-small"> Click and/or drag to place walls in the grid</p>
+
+            </Col>
+          </Row>
 
           <Row gutter={[16, 16]}>
               <Col xs={12} lg={12} >

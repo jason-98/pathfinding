@@ -10,17 +10,12 @@ export default class Key extends React.Component {
   render() {
     return (
       <div>
-        <div className="panel p-3 mb-4">
-
-            <Row>
-              <Col>
-                <h4 className="mb-2"> Key </h4>
-              </Col>
-            </Row>
+        <div className="p-2 mb-4">
 
 
-            <Row className="mb-1">
-              <Col xs={4} lg={4}>
+            <Row  type="flex" justify="left" align="top">
+
+              <Col className="mb-1" xs={{ span: 4, offset: 0}} sm={3} md={{ span: 2, offset: 2}} lg={{ span: 2, offset: 1}} xl={{ span: 2, offset: 2}}>
                 <Square
                   index={0}
                   value={1}
@@ -30,11 +25,11 @@ export default class Key extends React.Component {
                 />
 
               </Col>
-              <Col xs={8} lg={8}>
+              <Col xs={4} sm={3} md={1}>
                   Source
               </Col>
 
-              <Col xs={4} lg={4}>
+              <Col className="mb-1" xs={4} sm={3} md={2}>
                 <Square
                   index={0}
                   value={2}
@@ -44,62 +39,12 @@ export default class Key extends React.Component {
                 />
 
               </Col>
-              <Col xs={8} lg={8}>
+              <Col xs={4} sm={3} md={1}>
                   Target
               </Col>
-            </Row>
 
 
-
-
-            <Row className="mb-1">
-              <Col xs={4} lg={4}>
-                <Square
-                  index={0}
-                  value={4}
-                  onMouseEnter={() => console.log()}
-                  onMouseDown={() => console.log()}
-                  onMouseUp={() => console.log()}
-                />
-
-              </Col>
-              <Col xs={8} lg={8}>
-                  Path
-              </Col>
-
-              <Col xs={4} lg={4}>
-                <Square
-                  index={0}
-                  value={3}
-                  onMouseEnter={() => console.log()}
-                  onMouseDown={() => console.log()}
-                  onMouseUp={() => console.log()}
-                />
-
-              </Col>
-              <Col xs={8} lg={8}>
-                  Wall
-              </Col>
-            </Row>
-
-
-            <Row className="mb-2">
-
-              <Col xs={4} lg={4}>
-                <Square
-                  index={0}
-                  value={5}
-                  onMouseEnter={() => console.log()}
-                  onMouseDown={() => console.log()}
-                  onMouseUp={() => console.log()}
-                />
-
-              </Col>
-              <Col xs={8} lg={8}>
-                  Visited
-              </Col>
-
-              <Col xs={4} lg={4}>
+              <Col className="mb-1" xs={4} sm={3} md={2}>
                 <Square
                   index={0}
                   value={0}
@@ -109,18 +54,63 @@ export default class Key extends React.Component {
                 />
 
               </Col>
-              <Col xs={8} lg={8}>
+              <Col xs={4} sm={3} md={1}>
                   Empty
               </Col>
-            </Row>
 
-            <Row className="mb-2">
-              <Col xs={24} lg={24}>
-                  <p className="text-small"> Click and drag to move source and target squares</p>
-                  <p className="text-small"> Click and/or drag to place walls in the grid</p>
+              <Col className="mb-1" xs={4} sm={3} md={2}>
+                <Square
+                  index={0}
+                  value={5}
+                  onMouseEnter={() => console.log()}
+                  onMouseDown={() => console.log()}
+                  onMouseUp={() => console.log()}
+                />
 
               </Col>
-            </Row>
+              <Col xs={4} sm={3} md={1}>
+                  Visited
+              </Col>
+
+              <Col className="mb-1" xs={4} sm={3} md={2}>
+                <Square
+                  index={0}
+                  value={4}
+                  onMouseEnter={() => console.log()}
+                  onMouseDown={() => console.log()}
+                  onMouseUp={() => console.log()}
+                />
+
+              </Col>
+              <Col xs={4} sm={3} md={1}>
+                  Path
+              </Col>
+
+
+
+
+
+
+            <Col className="mb-1" xs={4} sm={3} md={2}>
+              <Square
+                index={0}
+                value={3}
+                onMouseEnter={() => console.log()}
+                onMouseDown={() => console.log()}
+                onMouseUp={() => console.log()}
+              />
+
+            </Col>
+            <Col xs={4} sm={3} md={1}>
+                Wall
+            </Col>
+
+
+
+
+
+
+          </Row>
 
 
         </div>
@@ -130,3 +120,14 @@ export default class Key extends React.Component {
     );
   }
 }
+
+
+/*
+<Row className="mb-2">
+  <Col xs={24} lg={24}>
+      <p className="text-small"> Click and drag to move source and target squares</p>
+      <p className="text-small"> Click and/or drag to place walls in the grid</p>
+
+  </Col>
+</Row>
+*/

@@ -3,6 +3,10 @@
   border: 1px solid #eaeaea;
 }
 
+.float-left{
+  float: left;
+}
+
 .text-small{
   font-size: x-small;
   margin-bottom: 0px;

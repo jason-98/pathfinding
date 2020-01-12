@@ -297,36 +297,38 @@ class App extends React.Component {
                     />
                   </Col>
                 </Row>
-                <Row>
-                  <Col className="visible-md">
-                    <Key />
-                  </Col>
-                </Row>
 
             </Col>
             <Col className="order-2 order-lg-2" md="12" lg="8" >
-              <BrowserView>
-                <Board
-                    squares={this.state.graph.toGrid()}
-                    onMouseDown={(i) => this.handleMouseDown(i)}
-                    onMouseEnter={(i) => this.handleMouseEnter(i)}
-                    onMouseUp={(i) => this.handleMouseUp(i)}
-                />
-              </BrowserView>
+              <Row>
+                <Col>
+                  <BrowserView>
+                    <Board
+                        squares={this.state.graph.toGrid()}
+                        onMouseDown={(i) => this.handleMouseDown(i)}
+                        onMouseEnter={(i) => this.handleMouseEnter(i)}
+                        onMouseUp={(i) => this.handleMouseUp(i)}
+                    />
+                  </BrowserView>
 
-              <MobileView>
-                <Board
-                    squares={this.state.graph.toGrid()}
-                    onMouseDown={(i) => this.handleTouchStart(i)}
-                    onMouseEnter={(i) => console.log()}
-                    onMouseUp={(i) => console.log()}
-                />
-              </MobileView>
+                  <MobileView>
+                    <Board
+                        squares={this.state.graph.toGrid()}
+                        onMouseDown={(i) => this.handleTouchStart(i)}
+                        onMouseEnter={(i) => console.log()}
+                        onMouseUp={(i) => console.log()}
+                    />
+                  </MobileView>
+                </Col>
+              </Row>
 
-            </Col>
-            <Col className="order-3 col-12 mt-4 hidden-md"  >
-                <Key
-                />
+
+              <Row className="mt-2">
+                <Col>
+                  <Key />
+                </Col>
+              </Row>
+
             </Col>
           </Row>
 
@@ -431,4 +433,12 @@ export default App;
     });
 
   }
+  */
+
+  /*
+
+  <Col className="order-3 col-12 mt-4 hidden-md"  >
+      <Key
+      />
+  </Col>
   */
