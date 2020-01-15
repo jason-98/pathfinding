@@ -4,9 +4,14 @@ import { Row, Col } from 'antd';
 import './ControlPanel.css';
 import Square from './Square';
 
+/**
+ * Class representing key which shows what each type of square represents.
+ */
+class Key extends React.Component {
 
-export default class Key extends React.Component {
-
+  /**
+   * Renders key.
+   */
   render() {
     return (
       <div>
@@ -119,6 +124,8 @@ export default class Key extends React.Component {
     );
   }
 }
+
+export default Key;
 
 
 /*

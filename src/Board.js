@@ -2,8 +2,14 @@ import React from 'react';
 import Square from './Square';
 import './Board.css';
 
+/**
+ * Class representing the game board. This is formed by a grid of Squares.
+ */
 class Board extends React.Component {
 
+  /**
+   * Creates the game board.
+   */
   constructor(props){
     super(props)
     this.state = {
@@ -11,7 +17,11 @@ class Board extends React.Component {
     };
   }
 
-
+  /**
+   * Helper function to render an individual square.
+   *
+   * @param {number} i - Index of position in grid where square is created.
+   */
   renderSquare(i) {
     return (
       <Square
@@ -20,11 +30,16 @@ class Board extends React.Component {
         onMouseEnter={() => this.handleMouseEnter(i)}
         onMouseDown={() => this.props.onMouseDown(i)}
         onMouseUp={() => this.props.onMouseUp(i)}
-        //onTouch= {(e)=> this.printConsole(e.touches[0].screenX)}
       />
     );
   }
 
+  /**
+   * Helper function to render an entire row of squares.
+   *
+   * @param {number} i_start - Start index of position in grid.
+   * @param {number} i_end - End index of position in grid.
+   */
   renderRow(i_start, i_end){
     const row = []
     for (var i = i_start; i < i_end; i++) {
@@ -39,7 +54,12 @@ class Board extends React.Component {
   }
 
 
-  //check if mouse is currently being pressed down before bubbling up
+  /**
+   * Handles when mouse enters a new square. If the mouse is currently held
+   * down, bubble this event up, else do nothing.
+   *
+   * @param {number} i - Index of position in grid where event occured.
+   */
   handleMouseEnter(i){
 
     if(this.state.isMouseDown){
@@ -49,7 +69,9 @@ class Board extends React.Component {
 
 
 
-
+  /**
+   * Renders game board. 
+   */
   render() {
 
     const rows = []

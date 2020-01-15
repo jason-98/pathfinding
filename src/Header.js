@@ -12,10 +12,14 @@ import './Header.css';
 import logo from './path_icon_white.png';
 
 
-
+/**
+ * Class representing header that is shown at the top of the screen.
+ */
 class Header extends React.Component {
 
-
+  /**
+   * Renders header.
+   */
   render() {
     return (
       <Navbar className="custom-navbar" type="dark" expand="md">

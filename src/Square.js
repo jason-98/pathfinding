@@ -1,6 +1,9 @@
 import React from 'react';
 import './Square.css';
 
+/**
+ * Function responsible for defining an individual square in board.
+ */
 function Square(props) {
   let buttonClass
   if(props.value===1){
@@ -24,7 +27,6 @@ function Square(props) {
         onMouseEnter={props.onMouseEnter}
         onMouseUp={props.onMouseUp}
     >
-
 
     </button>
   );

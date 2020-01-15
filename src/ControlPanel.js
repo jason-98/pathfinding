@@ -12,12 +12,8 @@ const marks = {
     label: <strong>Slower</strong>,
     value: 0
   },
-  33: {
-    value: 1
-  },
-  66: {
-    value: 2
-  },
+  33: { value: 1},
+  66: { value: 2},
   100: {
     style: {
       color: '#40A9FF',
@@ -27,6 +23,11 @@ const marks = {
   },
 };
 
+/**
+ * Converts epsilon slider position into string label.
+ *
+ * @return {string} Formatted label.
+ */
 function formatter(value) {
   if(value<33){
     return `${"ε = 0"}`;
@@ -41,8 +42,14 @@ function formatter(value) {
 }
 
 
-export default class ControlPanel extends React.Component {
+/**
+ * Class representing control panel which contains all control UI components.
+ */
+class ControlPanel extends React.Component {
 
+  /**
+   * Creates the control panel.
+   */
   constructor(props) {
       super(props);
 
@@ -52,8 +59,13 @@ export default class ControlPanel extends React.Component {
       }
     }
 
+    /**
+     * Handle when current pathfinding algorithm is changed in the UI. Updates
+     * state and then bubbles up event.
+     *
+     * @param {string} algorithm - Name of the new algorithm in use.
+     */
   handleAlgorithmChange(value){
-
 
     this.setState({
       algorithm: value,
@@ -69,6 +81,12 @@ export default class ControlPanel extends React.Component {
 
   }
 
+  /**
+   * Handle when epsilon value is changed in the UI. Updates state and then
+   * bubbles up event.
+   *
+   * @param {number} value - New value for epsilon.
+   */
   handleEpsilonChange(position){
     const value = marks[position].value
     this.setState({
@@ -79,6 +97,9 @@ export default class ControlPanel extends React.Component {
   }
 
 
+  /**
+   * Renders control panel.
+   */
   render() {
     return (
       <div>
@@ -220,6 +241,8 @@ export default class ControlPanel extends React.Component {
     );
   }
 }
+
+export default ControlPanel;
 
 
 /*
