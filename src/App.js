@@ -1,7 +1,7 @@
 import React from 'react';
 import "bootstrap/dist/css/bootstrap.min.css";
 import "shards-ui/dist/css/shards.min.css"
-import { Container, Row, Col} from "shards-react";
+import { Container, Row, Col, Nav, NavItem, NavLink, Navbar} from "shards-react";
 import './App.css';
 import Board from './Board.js';
 import ControlPanel from './ControlPanel.js';
@@ -391,6 +391,15 @@ class App extends React.Component {
 
 
         </Container>
+        <Navbar className="custom-footer hide-on-md" type="dark" expand="md">
+          <Nav navbar fill className="custom-footer ml-auto mr-auto" type="dark">
+            <NavItem>
+              <NavLink active href="#">
+                <b className=""> <u> Click here for more projects... </u> </b>
+              </NavLink>
+            </NavItem>
+          </Nav>
+        </Navbar>
       </div>
 
 

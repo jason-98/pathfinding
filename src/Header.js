@@ -26,13 +26,14 @@ class Header extends React.Component {
         <img className="d-inline-block align-top mr-3" src={logo} width="30" height="30"  alt="">
         </img>
         <NavbarBrand href="#"> Pathfinding Algorithm Visualisation</NavbarBrand>
-        <Nav navbar className="ml-auto">
-            <NavItem>
-              <NavLink active href="#">
-                <b> <u> more projects... </u> </b>
-              </NavLink>
-            </NavItem>
-          </Nav>
+          <Nav navbar className="ml-auto">
+              <NavItem>
+                <NavLink active href="#">
+                  <b className="hide-on-sm"> <u> more projects... </u> </b>
+                </NavLink>
+              </NavItem>
+            </Nav>
+
       </Navbar>
     );
   }

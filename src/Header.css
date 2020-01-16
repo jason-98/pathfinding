@@ -2,3 +2,9 @@
   background-color: #3BAAF8; /* #118AB2 #086788 #474973 #087E8B #004385 --#0689db --#F0544F --#50A2A7 --#06A77D* --49A9E4 --3BAAF8*/
   justify-content: flex-start;
 }
+
+@media (max-width: 767px) {
+   .hide-on-sm {
+      display: none;
+   }
+}
