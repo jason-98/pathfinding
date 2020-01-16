@@ -128,7 +128,7 @@ class ControlPanel extends React.Component {
           <div className={this.state.algorithm!=="a-star" ? 'mb-2 hidden' : ''}>
 
               <p className="text-small text-justify">
-                <b> A* </b> ("A-star") works similarly to Dijkstra's Algorithm, but uses a <b> heuristic function </b> to close in on the target more quickly. The algorithm works by maintaining two values at each node: 1) the exact distance g(n) from the source to the current node and 2) a heuristic h(n) that estimates the distance from the current node to the target. The algorithm determines which node to visit next by minimising the function <b> f(n) = g(n) + εh(n) </b>, where ε is a weighting factor that is applied to h(n) to observe how the heuristic affects the path that is selected [1].
+                <b> A* </b> ("A-star") works similarly to Dijkstra's Algorithm but uses a <b> heuristic function </b> to close in on the target more quickly. The algorithm works by maintaining two values at each node: 1) the exact distance g(n) from the source to the current node and 2) a heuristic h(n) that estimates the distance from the current node to the target. The algorithm determines which node to visit next by minimising the function <b> f(n) = g(n) + εh(n)</b>, where ε is a weighting factor that is applied to h(n) to observe how the heuristic affects the path that is selected [1].
               </p>
 
               <Row >
@@ -172,7 +172,7 @@ class ControlPanel extends React.Component {
               <Row className="mb-2">
                 <Col span={24}>
                     <p className="text-small text-justify">
-                    <b> Dijkstra's algorithm </b> is used to find the shortest path between the source node and the target node in a graph. The algorithm works by starting at the source node and examining all its neighbouring nodes. These neighbour nodes have their own neighbour nodes which can be visited in in turn. At each step the algorithm visits the node the closest to the source  that has not yet been visited. The algorithm exapnds outward in this manor until the target node is reached [1]. Dijkstra's algorithm is <b> guaranteed to find the shortest path </b> between the source and target nodes.
+                    <b> Dijkstra's algorithm </b> is used to find the shortest path between the source node and the target node in a graph. The algorithm works by starting at the source node and examining all its neighbouring nodes. These neighbour nodes have their own neighbour nodes which can be visited in turn. At each step, the algorithm visits the node the closest to the source  that has not yet been visited. The algorithm expands outward in this manner until the target node is reached [1]. Dijkstra's algorithm is <b> guaranteed to find the shortest path </b> between the source and target nodes.
                     </p>
 
 
@@ -187,7 +187,7 @@ class ControlPanel extends React.Component {
               <Row className="mb-2">
                 <Col span={24}>
                     <p className="text-small text-justify">
-                      <b> Greedy Best-First Search </b> works by using an estimate, or heuristic, to determine which node to visit next. The heuristic is often a function of the distance between each node and the target node. Instead of visiting the node closest to the source node at each step, like in Dijkstra's Algorithm, the node closest to the target node is visited next [1]. This does <b>not guarantee to find the shortest path </b>, however, it runs much quicker than Dijkstra’s Algorithm because the path is guided towards the goal very quickly.
+                      <b> Greedy Best-First Search </b> works by using an estimate, or heuristic, to determine which node to visit next. The heuristic is often a function of the distance between each node and the target node. Instead of visiting the node closest to the source node at each step, like in Dijkstra's Algorithm, the node closest to the target node is visited next [1]. This does <b>not guarantee to find the shortest path</b>, however, it runs much quicker than Dijkstra’s Algorithm because the path is guided towards the goal very quickly.
                     </p>
 
                     <p className="text-small text-justify">
@@ -215,7 +215,7 @@ class ControlPanel extends React.Component {
               <Row className="mb-2">
                 <Col span={24}>
                     <p className="text-small text-justify">
-                        <b> Breadth-First Search</b> works by starting at the source node and visiting all its immediate neighbours. Once all immediate neighbours have been visited, the algorithm moves down a level and visits all the neighbour's neighbours, and so on. This continues until the target node is found. This process should sound similar to Dijkstra's Algorithm. In fact Breadth-First Search is equivalent to Dijkstra's Algorithm for <b> unweighted </b> graphs. The grid of squares used in this visualisation is an example of an unweighted graph. 
+                        <b> Breadth-First Search</b> works by starting at the source node and visiting all its immediate neighbours. Once all immediate neighbours have been visited, the algorithm moves down a level and visits all the neighbour's neighbours, and so on. This continues until the target node is found. This process should sound similar to Dijkstra's Algorithm. Breadth-First Search is equivalent to Dijkstra's Algorithm for <b> unweighted </b> graphs. The grid of squares used in this visualisation is an example of an unweighted graph.
                     </p>
                 </Col>
               </Row>
