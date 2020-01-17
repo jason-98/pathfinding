@@ -1,5 +1,5 @@
 
-This web application provides an interactive exploration of several popular pathfinding algorithms, including Dijkstra's Algorithm, A*, Greedy Best-First Search, and others. All algorithms were implemented from scratch in JavaScript. The web interface was developed using React. This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This web application provides an interactive exploration of several popular pathfinding algorithms, including Dijkstra's Algorithm, A*, Greedy Best-First Search, and others. All algorithms were implemented in JavaScript from scratch. The web interface was developed using React. This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 
 
@@ -38,13 +38,13 @@ You don’t have to ever use `eject`. The curated feature set is suitable for sm
 
 ## Generating documentation with Jsdoc
 
-In the project directory root, you can run:
+In the root of the project directory, you can run:
 
-### 'jsdoc src/'
+### `jsdoc src/`
 
-Generates all documentation in the' out/' folder. Open index.html in a browser to view documentation.  
+Generates all documentation and places in the' out/' folder. Open index.html in a browser to view documentation.  
 
-## Learn More about Create React App
+## Learn More
 
 You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
