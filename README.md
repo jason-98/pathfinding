@@ -1,5 +1,5 @@
 
-This web application provides an interactive exploration of several popular pathfinding algorithms, including Dijkstra's Algorithm, A*, Greedy Best-First Search, and others. All algorithms were implemented in JavaScript from scratch. The web interface was developed using React. This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This web application provides an interactive exploration of several popular pathfinding algorithms, including Dijkstra's Algorithm, A*, Greedy Best-First Search, and others. All algorithms were implemented in JavaScript from scratch. The web interface was developed using React. A strong emphasis was placed on responsive web design. This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 
 
@@ -42,7 +42,7 @@ In the root of the project directory, you can run:
 
 ### `jsdoc src/`
 
-Generates all documentation and places in the' out/' folder. Open index.html in a browser to view documentation.  
+Generates all documentation and places in the 'out/' directory. Open index.html in a browser to view documentation.  
 
 ## Learn More
 
