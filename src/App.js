@@ -394,7 +394,7 @@ class App extends React.Component {
         <Navbar className="custom-footer hide-on-md" type="dark" expand="md">
           <Nav navbar fill className="custom-footer ml-auto mr-auto" type="dark">
             <NavItem>
-              <NavLink active href="#">
+              <NavLink active href="https://jasonpilbrough.github.io/">
                 <b className=""> <u> Click here for more projects... </u> </b>
               </NavLink>
             </NavItem>
