@@ -28,7 +28,7 @@ class Header extends React.Component {
         <NavbarBrand href="#"> Pathfinding Algorithm Visualisation</NavbarBrand>
           <Nav navbar className="ml-auto">
               <NavItem>
-                <NavLink active href="#">
+                <NavLink active href="https://jasonpilbrough.github.io/">
                   <b className="hide-on-sm"> <u> more projects... </u> </b>
                 </NavLink>
               </NavItem>
